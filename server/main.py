@@ -9,7 +9,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import Dict, List, Optional
-from jiosaavn_client import JioSaavnClient
+
+try:
+    from server.jiosaavn_client import JioSaavnClient
+except ImportError:
+    from jiosaavn_client import JioSaavnClient
 
 app = FastAPI()
 
