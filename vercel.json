@@ -8,10 +8,5 @@
             "source": "/(.*)",
             "destination": "/client/index.html"
         }
-    ],
-    "functions": {
-        "api/index.py": {
-            "maxDuration": 10
-        }
-    }
+    ]
 }
