@@ -8,16 +8,27 @@ import uuid
 import requests
 from mangum import Mangum
 
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
+
 # Helper to fix imports if running locally vs vercel
 try:
-    from .jiosaavn_client import JioSaavnClient
+    from jiosaavn_client import JioSaavnClient
 except ImportError:
     try:
-        from jiosaavn_client import JioSaavnClient
-    except:
-        pass
+        from api.jiosaavn_client import JioSaavnClient
+    except ImportError:
+        # Last resort: try to find it in root
+        sys.path.append(os.path.join(current_dir, '..'))
+        from api.jiosaavn_client import JioSaavnClient
 
 app = FastAPI()
+
+@app.get("/api/health")
+async def health_check():
+    return {"status": "ok", "backend": "active"}
 
 # Enable CORS for frontend
 app.add_middleware(
