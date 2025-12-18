@@ -10,13 +10,13 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import Dict, List, Optional
 
-try:
-    from .jiosaavn_client import JioSaavnClient
-except ImportError:
-    try:
-        from server.jiosaavn_client import JioSaavnClient
-    except ImportError:
-        from jiosaavn_client import JioSaavnClient
+# Force current directory into sys.path to solve Vercel import issues
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
+
+from jiosaavn_client import JioSaavnClient
 
 app = FastAPI()
 
