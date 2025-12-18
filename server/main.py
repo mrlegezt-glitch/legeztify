@@ -11,9 +11,12 @@ from pydantic import BaseModel
 from typing import Dict, List, Optional
 
 try:
-    from server.jiosaavn_client import JioSaavnClient
+    from .jiosaavn_client import JioSaavnClient
 except ImportError:
-    from jiosaavn_client import JioSaavnClient
+    try:
+        from server.jiosaavn_client import JioSaavnClient
+    except ImportError:
+        from jiosaavn_client import JioSaavnClient
 
 app = FastAPI()
 
