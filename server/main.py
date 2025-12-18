@@ -25,8 +25,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DOWNLOAD_DIR = os.path.join(os.getcwd(), "downloads")
-os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+# Handle Read-Only Filesystem (Vercel)
+try:
+    DOWNLOAD_DIR = os.path.join(os.getcwd(), "downloads")
+    os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+except OSError:
+    # Fallback to /tmp for Vercel/Lambda
+    DOWNLOAD_DIR = os.path.join("/tmp", "downloads")
+    os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 
 # Start JioSaavn client
 jio_client = JioSaavnClient()
