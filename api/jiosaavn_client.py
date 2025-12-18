@@ -1,7 +1,6 @@
 import requests
 import json
 import base64
-from Crypto.Cipher import DES
 
 class JioSaavnClient:
     def __init__(self):
@@ -15,6 +14,7 @@ class JioSaavnClient:
 
     def decrypt_url(self, encrypted_url):
         try:
+            from Crypto.Cipher import DES
             cipher = DES.new(self.des_key, DES.MODE_ECB)
             # Add padding if necessary for base64 decode (standard base64 usually)
             encrypted_data = base64.b64decode(encrypted_url)
